@@ -22,7 +22,6 @@ fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
-    // TODO: Set the expected answer for the test input
     assert_eq!(11, part1(BufReader::new(TEST.as_bytes()))?);
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
@@ -41,7 +40,6 @@ fn main() -> Result<()> {
 }
 
 fn part1<R: BufRead>(reader: R) -> Result<usize> {
-    // TODO: Solve Part 1 of the puzzle
     let (mut left, mut right): (Vec<usize>, Vec<usize>) = reader
         .lines()
         .map_while(Result::ok)
