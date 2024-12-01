@@ -53,7 +53,9 @@ fn part1<R: BufRead>(reader: R) -> Result<usize> {
         .lines()
         .map_while(Result::ok)
         .map(|line| -> (usize, usize) {
-            let mut nums = line.split_whitespace().map(|n| n.parse::<usize>().ok());
+            let mut nums = line
+            .split_whitespace()
+            .map(|n| n.parse::<usize>().ok());
             let a = nums.next().flatten();
             let b = nums.next().flatten();
             (a.unwrap(), b.unwrap())
@@ -74,14 +76,19 @@ fn part2<R: BufRead>(reader: R) -> Result<usize> {
         .lines()
         .map_while(Result::ok)
         .map(|line| -> (usize, usize) {
-            let mut nums = line.split_whitespace().map(|n| n.parse::<usize>().ok());
+            let mut nums = line
+            .split_whitespace()
+            .map(|n| n.parse::<usize>().ok());
             let a = nums.next().flatten();
             let b = nums.next().flatten();
             (a.unwrap(), b.unwrap())
         })
         .unzip();
     let right = right.iter().counts();
-    let answer: usize = left.iter().map(|a| a * right.get(&a).unwrap_or(&0)).sum();
+    let answer: usize = left
+    .iter()
+    .map(|a| a * right.get(&a).unwrap_or(&0))
+    .sum();
     Ok(answer)
 }
 
