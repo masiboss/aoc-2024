@@ -22,29 +22,6 @@ fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
-
-    fn part1<R: BufRead>(reader: R) -> Result<u32> {
-        // TODO: Solve Part 1 of the puzzle
-        let (mut left, mut right): (Vec<u32>, Vec<u32>) = reader
-            .lines()
-            .map_while(Result::ok)
-            .map(|line| -> (u32, u32) {
-                let mut nums = line.split_whitespace().map(|n| n.parse::<u32>().ok());
-                let a = nums.next().flatten();
-                let b = nums.next().flatten();
-                (a.unwrap(), b.unwrap())
-            })
-            .unzip();
-        left.sort();
-        right.sort();
-        let answer: u32 = left
-            .iter()
-            .zip(right.iter())
-            .map(|(a, b)| a.abs_diff(*b))
-            .sum();
-        Ok(answer)
-    }
-
     // TODO: Set the expected answer for the test input
     assert_eq!(11, part1(BufReader::new(TEST.as_bytes()))?);
 
@@ -52,17 +29,51 @@ fn main() -> Result<()> {
     let result = time_snippet!(part1(input_file)?);
     println!("Result = {}", result);
 
-    // println!("\n=== Part 2 ===");
-    //
-    // fn part2<R: BufRead>(reader: R) -> Result<usize> {
-    //     Ok(0)
-    // }
-    //
-    // assert_eq!(0, part2(BufReader::new(TEST.as_bytes()))?);
-    //
-    // let input_file = BufReader::new(File::open(INPUT_FILE)?);
-    // let result = time_snippet!(part2(input_file)?);
-    // println!("Result = {}", result);\
+    println!("\n=== Part 2 ===");
+
+    assert_eq!(31, part2(BufReader::new(TEST.as_bytes()))?);
+
+    let input_file = BufReader::new(File::open(INPUT_FILE)?);
+    let result = time_snippet!(part2(input_file)?);
+    println!("Result = {}", result);
 
     Ok(())
+}
+
+fn part1<R: BufRead>(reader: R) -> Result<usize> {
+    // TODO: Solve Part 1 of the puzzle
+    let (mut left, mut right): (Vec<usize>, Vec<usize>) = reader
+        .lines()
+        .map_while(Result::ok)
+        .map(|line| -> (usize, usize) {
+            let mut nums = line.split_whitespace().map(|n| n.parse::<usize>().ok());
+            let a = nums.next().flatten();
+            let b = nums.next().flatten();
+            (a.unwrap(), b.unwrap())
+        })
+        .unzip();
+    left.sort();
+    right.sort();
+    let answer: usize = left
+        .iter()
+        .zip(right.iter())
+        .map(|(a, b)| a.abs_diff(*b))
+        .sum();
+    Ok(answer)
+}
+
+fn part2<R: BufRead>(reader: R) -> Result<usize> {
+    let (left, right): (Vec<usize>, Vec<usize>) = reader
+        .lines()
+        .map_while(Result::ok)
+        .map(|line| -> (usize, usize) {
+            let mut nums = line.split_whitespace().map(|n| n.parse::<usize>().ok());
+            let a = nums.next().flatten();
+            let b = nums.next().flatten();
+            (a.unwrap(), b.unwrap())
+        })
+        .unzip();
+    let right = right.iter().counts();
+    let answer: usize = left.iter().map(|a| a * right.get(&a).unwrap_or(&0)).sum();
+    Ok(answer)
 }
