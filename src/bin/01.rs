@@ -16,7 +16,7 @@ struct Testdata {
     test_result_2: usize,
 }
 
-#[allow(dead_code)] //used in tests
+#[allow(dead_code)]
 const TEST: Testdata = Testdata {
     input: "\
 3   4
