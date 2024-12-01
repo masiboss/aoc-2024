@@ -9,28 +9,37 @@ use std::io::{BufRead, BufReader};
 const DAY: &str = "01"; // TODO: Fill the day
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
 
-const TEST: &str = "\
+#[allow(dead_code)]
+struct Testdata {
+    input: &'static str,
+    test_result_1: usize,
+    test_result_2: usize,
+}
+
+#[allow(dead_code)] //used in tests
+const TEST: Testdata = Testdata {
+    input: "\
 3   4
 4   3
 2   5
 1   3
 3   9
 3   3
-"; // TODO: Add the test input
+",
+    test_result_1: 11,
+    test_result_2: 31,
+};
 
 fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
-    assert_eq!(11, part1(BufReader::new(TEST.as_bytes()))?);
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part1(input_file)?);
     println!("Result = {}", result);
 
     println!("\n=== Part 2 ===");
-
-    assert_eq!(31, part2(BufReader::new(TEST.as_bytes()))?);
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
@@ -74,4 +83,24 @@ fn part2<R: BufRead>(reader: R) -> Result<usize> {
     let right = right.iter().counts();
     let answer: usize = left.iter().map(|a| a * right.get(&a).unwrap_or(&0)).sum();
     Ok(answer)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(
+            TEST.test_result_1,
+            time_snippet!(part1(BufReader::new(TEST.input.as_bytes())).unwrap())
+        );
+    }
+    #[test]
+    fn test_part2() {
+        assert_eq!(
+            TEST.test_result_2,
+            time_snippet!(part2(BufReader::new(TEST.input.as_bytes())).unwrap())
+        );
+    }
 }
