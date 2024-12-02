@@ -77,16 +77,30 @@ fn part2<R: BufRead>(reader: R) -> Result<usize> {
         .lines()
         .map_while(Result::ok)
         .map(|record| {
-            let values = record
+            record
                 .split_whitespace()
-                .map(|n| n.parse::<isize>().unwrap());
-            values
-                .clone()
-                .zip(values.clone().skip(1))
-                .map(|(a, b)| a != b && a.abs_diff(b) <= 3)
-                .filter(|&x| !x)
-                .count() < 2
-                && (values.clone().is_sorted() || values.clone().rev().is_sorted())
+                .map(|n| n.parse::<isize>().unwrap())
+                .collect_vec()
+        })
+        .map(|report| {
+            let safe = is_safe(report.clone());
+            if safe {
+                return true;
+            }
+            for i in 0..report.len() {
+                if is_safe(
+                    report
+                        .clone()
+                        .into_iter()
+                        .enumerate()
+                        .filter(|(index, _)| *index != i)
+                        .map(|(_, x)| x)
+                        .collect(),
+                ) {
+                    return true;
+                }
+            }
+            false
         })
         .filter(|&x| x)
         .count();
