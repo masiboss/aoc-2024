@@ -10,8 +10,8 @@ const DAY: &str = "00"; // TODO: Fill the day
 #[allow(dead_code)]
 const TEST: Testdata = Testdata {
     input: "\
-    <INPUT>
-    ",
+<INPUT>
+",
     test_result_1: 0,
     test_result_2: 0,
 };
@@ -24,7 +24,7 @@ struct Testdata {
     test_result_2: usize,
 }
 
-pub fn main() -> Result<()> {
+fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
