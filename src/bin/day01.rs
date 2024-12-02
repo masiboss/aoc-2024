@@ -7,6 +7,19 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 const DAY: &str = "01"; // TODO: Fill the day
+#[allow(dead_code)]
+const TEST: Testdata = Testdata {
+    input: "\
+    3   4
+    4   3
+    2   5
+    1   3
+    3   9
+    3   3
+    ",
+    test_result_1: 11,
+    test_result_2: 31,
+};
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
 
 #[allow(dead_code)]
@@ -16,21 +29,7 @@ struct Testdata {
     test_result_2: usize,
 }
 
-#[allow(dead_code)]
-const TEST: Testdata = Testdata {
-    input: "\
-3   4
-4   3
-2   5
-1   3
-3   9
-3   3
-",
-    test_result_1: 11,
-    test_result_2: 31,
-};
-
-fn main() -> Result<()> {
+pub fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
