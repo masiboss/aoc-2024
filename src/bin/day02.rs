@@ -55,13 +55,11 @@ fn part1<R: BufRead>(reader: R) -> Result<usize> {
             let values = record
                 .split_whitespace()
                 .map(|n| n.parse::<isize>().unwrap());
-            if !(values.clone().is_sorted() || values.clone().rev().is_sorted()) {
-                return false;
-            }
             values
                 .clone()
                 .zip(values.clone().skip(1))
                 .all(|(a, b)| a != b && a.abs_diff(b) <= 3)
+                && (values.clone().is_sorted() || values.rev().is_sorted())
         })
         .filter(|&x| x)
         .count();
