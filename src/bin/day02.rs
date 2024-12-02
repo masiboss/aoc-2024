@@ -52,18 +52,24 @@ fn part1<R: BufRead>(reader: R) -> Result<usize> {
         .lines()
         .map_while(Result::ok)
         .map(|record| {
-            let values = record
+            let values: Vec<isize> = record
                 .split_whitespace()
-                .map(|n| n.parse::<isize>().unwrap());
-            values
-                .clone()
-                .zip(values.clone().skip(1))
-                .all(|(a, b)| a != b && a.abs_diff(b) <= 3)
-                && (values.clone().is_sorted() || values.rev().is_sorted())
+                .map(|n| n.parse::<isize>().unwrap())
+                .collect();
+            is_safe(values)
         })
         .filter(|&x| x)
         .count();
     Ok(answer)
+}
+
+fn is_safe(values: Vec<isize>) -> bool {
+    values
+        .clone()
+        .into_iter()
+        .zip(values.clone().into_iter().skip(1))
+        .all(|(a, b)| a != b && a.abs_diff(b) <= 3)
+        && (values.clone().is_sorted() || values.into_iter().rev().is_sorted())
 }
 
 fn part2<R: BufRead>(reader: R) -> Result<usize> {
