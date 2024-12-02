@@ -18,7 +18,7 @@ const TEST: Testdata = Testdata {
 1 3 6 7 9
 ",
     test_result_1: 2,
-    test_result_2: 0,
+    test_result_2: 4,
 };
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
 
@@ -67,7 +67,23 @@ fn part1<R: BufRead>(reader: R) -> Result<usize> {
 }
 
 fn part2<R: BufRead>(reader: R) -> Result<usize> {
-    let answer = reader.lines().map_while(Result::ok).count();
+    let answer = reader
+        .lines()
+        .map_while(Result::ok)
+        .map(|record| {
+            let values = record
+                .split_whitespace()
+                .map(|n| n.parse::<isize>().unwrap());
+            values
+                .clone()
+                .zip(values.clone().skip(1))
+                .map(|(a, b)| a != b && a.abs_diff(b) <= 3)
+                .filter(|&x| !x)
+                .count() < 2
+                && (values.clone().is_sorted() || values.clone().rev().is_sorted())
+        })
+        .filter(|&x| x)
+        .count();
     Ok(answer)
 }
 
