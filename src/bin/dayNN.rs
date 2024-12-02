@@ -6,7 +6,15 @@ use itertools::Itertools;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-const DAY: &str = "01"; // TODO: Fill the day
+const DAY: &str = "00"; // TODO: Fill the day
+#[allow(dead_code)]
+const TEST: Testdata = Testdata {
+    input: "\
+    <INPUT>
+    ",
+    test_result_1: 0,
+    test_result_2: 0,
+};
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
 
 #[allow(dead_code)]
@@ -16,29 +24,20 @@ struct Testdata {
     test_result_2: usize,
 }
 
-#[allow(dead_code)]
-const TEST: Testdata = Testdata {
-    input: "\
-<INPUT>
-",
-    test_result_1: 0,
-    test_result_2: 0,
-};
-
-fn main() -> Result<()> {
+pub fn main() -> Result<()> {
     start_day(DAY);
 
     println!("=== Part 1 ===");
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
-    let result = time_snippet!(part1(input_file)?);
-    println!("Result = {}", result);
+    let result1 = time_snippet!(part1(input_file)?);
+    println!("Result = {}", result1);
 
     println!("\n=== Part 2 ===");
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
-    let result = time_snippet!(part2(input_file)?);
-    println!("Result = {}", result);
+    let result2 = time_snippet!(part2(input_file)?);
+    println!("Result = {}", result2);
 
     Ok(())
 }
