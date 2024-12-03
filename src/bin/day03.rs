@@ -66,24 +66,13 @@ fn part2<R: BufRead>(mut reader: R) -> Result<usize> {
     let mut buf = String::new();
     reader.read_to_string(&mut buf)?;
     let mul = Regex::new(r"mul\((\d+),\s*(\d+)\)")?;
-    let do_regex = Regex::new(r"do\(\)")?;
-    let dont_regex = Regex::new(r"don't\(\)")?;
+    let dont_to_do = Regex::new(r"(?s)don't\(\).*?do\(\)")?;
+    let dont_to_end = Regex::new(r"(?s)don't\(\).*")?;
+    buf = dont_to_do.replace_all(&buf, "").to_string();
+    buf = dont_to_end.replace_all(&buf, "").to_string();
+
     let answer = mul
         .captures_iter(&buf)
-        .filter(|capture: &Captures| {
-            let preceding_text = &buf[..capture.get(0).unwrap().start()];
-            let last_do_idx = do_regex
-                .find_iter(preceding_text)
-                .last()
-                .map(|m| m.end())
-                .unwrap_or(0);
-            let last_dont_idx = dont_regex
-                .find_iter(preceding_text)
-                .last()
-                .map(|m| m.end())
-                .unwrap_or(0);
-            last_do_idx >= last_dont_idx
-        })
         .map(|capture: Captures| {
             let a = capture[1].parse::<usize>().unwrap();
             let b = capture[2].parse::<usize>().unwrap();
