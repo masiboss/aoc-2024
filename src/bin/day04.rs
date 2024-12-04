@@ -23,7 +23,7 @@ MAMMMXMMMM
 MXMXAXMASX
 ",
     test_result_1: 18,
-    test_result_2: 0,
+    test_result_2: 9,
 };
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
 
@@ -63,7 +63,6 @@ enum Xmas {
 const XMAS_WORD: [Xmas; 4] = [Xmas::X, Xmas::M, Xmas::A, Xmas::S];
 
 fn part1<R: BufRead>(reader: R) -> Result<usize> {
-    // should step through the field with for searches, 4 for the traigt directions anf for 4 the diagonals
     let grid: Vec<Vec<Xmas>> = reader
         .lines()
         .map_while(Result::ok)
@@ -133,8 +132,67 @@ fn part1<R: BufRead>(reader: R) -> Result<usize> {
 }
 
 fn part2<R: BufRead>(reader: R) -> Result<usize> {
-    let answer = reader.lines().map_while(Result::ok).count();
-    Ok(answer)
+    let grid: Vec<Vec<Xmas>> = reader
+        .lines()
+        .map_while(Result::ok)
+        .map(|line| {
+            line.chars()
+                .filter_map(|c| match c {
+                    'X' => Some(Xmas::X),
+                    'M' => Some(Xmas::M),
+                    'A' => Some(Xmas::A),
+                    'S' => Some(Xmas::S),
+                    _ => None,
+                })
+                .collect()
+        })
+        .collect();
+
+    let mut found_xmas: HashSet<(usize, usize)> = HashSet::new();
+    let rows = grid.len();
+    let cols = grid[0].len();
+
+    for row in 1..rows - 1 {
+        for col in 1..cols - 1 {
+            if grid[row][col] == Xmas::A
+                && (is_mas(&grid, row - 1, col - 1, row + 1, col + 1)
+                    && is_mas(&grid, row - 1, col + 1, row + 1, col - 1)
+                    || is_mas(&grid, row - 1, col + 1, row + 1, col - 1)
+                        && is_mas(&grid, row - 1, col - 1, row + 1, col + 1))
+            {
+                found_xmas.insert((row, col));
+            }
+        }
+    }
+
+    Ok(found_xmas.len())
+}
+
+fn is_mas(
+    grid: &[Vec<Xmas>],
+    start_row: usize,
+    start_col: usize,
+    end_row: usize,
+    end_col: usize,
+) -> bool {
+    let dr = if end_row > start_row { 1 } else { -1 };
+    let dc = if end_col > start_col { 1 } else { -1 };
+
+    let positions = [
+        (start_row, start_col),
+        (
+            (start_row as isize + dr) as usize,
+            (start_col as isize + dc) as usize,
+        ),
+        (end_row, end_col),
+    ];
+
+    let values = positions
+        .iter()
+        .map(|&(r, c)| grid[r][c])
+        .collect::<Vec<Xmas>>();
+
+    values == vec![Xmas::M, Xmas::A, Xmas::S] || values == vec![Xmas::S, Xmas::A, Xmas::M]
 }
 
 #[cfg(test)]
