@@ -155,10 +155,8 @@ fn part2<R: BufRead>(reader: R) -> Result<usize> {
     for row in 1..rows - 1 {
         for col in 1..cols - 1 {
             if grid[row][col] == Xmas::A
-                && (is_mas(&grid, row - 1, col - 1, row + 1, col + 1)
-                    && is_mas(&grid, row - 1, col + 1, row + 1, col - 1)
-                    || is_mas(&grid, row - 1, col + 1, row + 1, col - 1)
-                        && is_mas(&grid, row - 1, col - 1, row + 1, col + 1))
+                && is_mas(&grid, row - 1, col - 1, row + 1, col + 1)
+                && is_mas(&grid, row - 1, col + 1, row + 1, col - 1)
             {
                 found_xmas.insert((row, col));
             }
