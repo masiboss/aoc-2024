@@ -1,0 +1,175 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'adv_code_2024'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "adv_code_2024",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day01'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day01",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day01",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'day01'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day01",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day01",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day04'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day04",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day04",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'day04'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day04",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day04",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'day05'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day05",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day05",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'day05'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=day05",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "day05",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'dayNN'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=dayNN",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "dayNN",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'dayNN'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=dayNN",
+                    "--package=adv-code-2024"
+                ],
+                "filter": {
+                    "name": "dayNN",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
